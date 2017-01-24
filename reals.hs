@@ -7,7 +7,7 @@ data MajorReal = Point MinorReal | MajorReal Z MajorReal
 data MinorReal = End | MinorReal Z MinorReal
 
 instance Show Z where
-    show (Base x y) | y >= x = show (Base x (div y x)) ++ show (Base x (mod y x))
+    show (Base x y) | y >= x = "|" ++ show (Base x (div y x)) ++ show (Base x (mod y x)) ++ "|"
 
     show (Base 16 15) = "f"
     show (Base 16 14) = "e"
@@ -15,8 +15,6 @@ instance Show Z where
     show (Base 16 12) = "c"
     show (Base 16 11) = "b"
     show (Base 16 10) = "a"
-
-    show (Base x y) | x > 10 && x /= 16 = "|" ++ show y ++ "|"
 
     show (Base x y) = show y
 
