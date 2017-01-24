@@ -44,7 +44,7 @@ instance Num Z where
     fromInteger n = Base 10 n
 
 instance Eq Z where
-    Base b x == Base c y = x == y
+    Base _ x == Base _ y = x == y
 
 recNewton'sMethod f x n | n <= 0 = x
 recNewton'sMethod f x n = x2 - f x2 / f' x2
@@ -62,6 +62,6 @@ newton'sMethod f f' prc x
     | otherwise          = newton'sMethod f f' x2 prc
     where             x2 = x - f x / f' x
 
-twelve = Positive (MajorReal (Base 10 1) (MajorReal (Base 10 2) (Point End)))
-twoAndaHalf = Positive (MajorReal (Base 10 2) (Point (MinorReal (Base 10 5) End)))
-negativePointTwo = Negative (Point (MinorReal (Base 10 2) End))
+twelve = Positive (MajorReal 1 (MajorReal 2 (Point End)))
+twoAndaHalf = Positive (MajorReal 2 (Point (MinorReal 5 End)))
+negativePointTwo = Negative (Point (MinorReal 2 End))
