@@ -1,7 +1,10 @@
-module Reals (R(Plus, Minus, Fig, Point, End)) where
+module Reals (R(Positive, Negative), MajorReal(Point, MajorReal), MinorReal(End, MinorReal)) where
 
 data Z = Base Integer Integer
-data R = Plus R | Minus R | Fig Z R | Point R | End
+data R = Positive MajorReal | Negative MajorReal
+
+data MajorReal = Point MinorReal | MajorReal Z MajorReal
+data MinorReal = End | MinorReal Z MinorReal
 
 instance Show Z where
     show (Base x y) | y >= x = show (div y x) ++ show (mod y x)
@@ -18,15 +21,20 @@ instance Show Z where
     show (Base x y) = show y
 
 instance Show R where
-    show (Plus x)   = "" ++ show x
-    show (Minus x)  =  "-" ++ show x
-    show (Fig x y)  = show x ++ show y
-    show (Point x)  = "." ++ show x
-    show End        = ""
+    show (Positive x) = show x
+    show (Negative x) = "-" ++ show x
 
-instance Num R where
-    (Point x) + (Point y) = Point (x + y)
+instance Show MajorReal where
+    show (MajorReal x y) = show x ++ show y
+    show (Point End) = ""
+    show (Point x) = "." ++ show x
 
+instance Show MinorReal where
+    show End = ""
+    show (MinorReal x y) = show x ++ show y
+
+--instance Num R where
+--    (Point x) + (Point y) = Point (x + y)
 
 recNewton'sMethod f x n | n <= 0 = x
 recNewton'sMethod f x n = x2 - f x2 / f' x2
@@ -44,6 +52,6 @@ newton'sMethod f f' prc x
     | otherwise          = newton'sMethod f f' x2 prc
     where             x2 = x - f x / f' x
 
-twelve = Plus (Fig (Base 10 1) (Fig (Base 10 2) End))
-twoAndaHalf = Plus (Fig (Base 10 2) (Point (Fig (Base 10 5) End)))
-negativePointTwo = Minus (Point (Fig (Base 10 2) End))
+twelve = Positive (MajorReal (Base 10 1) (MajorReal (Base 10 2) (Point End)))
+twoAndaHalf = Positive (MajorReal (Base 10 2) (Point (MinorReal (Base 10 5) End)))
+negativePointTwo = Negative (Point (MinorReal (Base 10 2) End))
