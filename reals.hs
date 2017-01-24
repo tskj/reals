@@ -7,7 +7,7 @@ data MajorReal = Point MinorReal | MajorReal Z MajorReal
 data MinorReal = End | MinorReal Z MinorReal
 
 instance Show Z where
-    show (Base x y) | y >= x = show (div y x) ++ show (mod y x)
+    show (Base x y) | y >= x = show (Base x (div y x)) ++ show (Base x (mod y x))
 
     show (Base 16 15) = "f"
     show (Base 16 14) = "e"
@@ -33,8 +33,16 @@ instance Show MinorReal where
     show End = ""
     show (MinorReal x y) = show x ++ show y
 
---instance Num R where
---    (Point x) + (Point y) = Point (x + y)
+instance Num Z where
+    Base b x + Base c y = Base d (x + y)
+        where d = max b c
+    Base b x * Base c y = Base d (x * y)
+        where d = max b c
+    negate (Base b x) = Base b (negate x)
+    abs (Base b x) = Base b (abs x)
+    signum (Base b x) = Base b (signum x)
+    fromInteger n = Base 10 n
+
 
 recNewton'sMethod f x n | n <= 0 = x
 recNewton'sMethod f x n = x2 - f x2 / f' x2
