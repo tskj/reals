@@ -3,8 +3,8 @@ module Reals (R(Positive, Negative), MajorReal(Point, MajorReal), MinorReal(End,
 data Z = Base Integer Integer
 data R = Positive MajorReal | Negative MajorReal
 
-data MajorReal = Point MinorReal | MajorReal Z MajorReal
-data MinorReal = End | MinorReal Z MinorReal
+data MajorReal = Point MinorReal | MajorDigit Z MajorReal
+data MinorReal = End | MinorDigit Z MinorReal
 
 instance Show Z where
     show (Base x y) | y >= x = "|" ++ show (Base x (div y x)) ++ show (Base x (mod y x)) ++ "|"
@@ -60,6 +60,6 @@ newton'sMethod f f' prc x
     | otherwise          = newton'sMethod f f' x2 prc
     where             x2 = x - f x / f' x
 
-twelve = Positive (MajorReal 1 (MajorReal 2 (Point End)))
-twoAndaHalf = Positive (MajorReal 2 (Point (MinorReal 5 End)))
-negativePointTwo = Negative (Point (MinorReal 2 End))
+twelve = Positive (MajorDigit 1 (MajorDigit 2 (Point End)))
+twoAndaHalf = Positive (MajorDigit 2 (Point (MinorDigit 5 End)))
+negativePointTwo = Negative (Point (MinorDigit 2 End))
