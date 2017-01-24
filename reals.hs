@@ -43,6 +43,8 @@ instance Num Z where
     signum (Base b x) = Base b (signum x)
     fromInteger n = Base 10 n
 
+instance Eq Z where
+    Base b x == Base c y = x == y
 
 recNewton'sMethod f x n | n <= 0 = x
 recNewton'sMethod f x n = x2 - f x2 / f' x2
