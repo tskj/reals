@@ -24,8 +24,9 @@ instance Show R where
     show (Point x)  = "." ++ show x
     show End        = ""
 
---instance Num R where
---    (Point x) + (Point y) = 
+instance Num R where
+    (Point x) + (Point y) = Point (x + y)
+
 
 recNewton'sMethod f x n | n <= 0 = x
 recNewton'sMethod f x n = x2 - f x2 / f' x2
