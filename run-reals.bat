@@ -1,0 +1,1 @@
+@runhaskell unit_test.hs && ghci .\reals.hs

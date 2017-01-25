@@ -13,19 +13,6 @@ infixr 1 :.
 data MajorReal = Point MinorReal | (:-:) Z MajorReal
 data MinorReal = (:.) | (:.:) Z MinorReal
 
-instance Show R where
-    show (Positive x) = show x
-    show (Negative x) = "-" ++ show x
-
-instance Show MajorReal where
-    show (x :-: y)      = show x ++ show y
-    show (Point (:.))   = ""
-    show (Point x)      = "." ++ show x
-
-instance Show MinorReal where
-    show (:.) = ""
-    show (x :.: y) = show x ++ show y
-
 recNewton'sMethod f x n | n <= 0 = x
 recNewton'sMethod f x n = x2 - f x2 / f' x2
     where x2 = recNewton'sMethod f x (n-1)
@@ -42,11 +29,15 @@ newton'sMethod f f' prc x
     | otherwise          = newton'sMethod f f' x2 prc
     where             x2 = x - f x / f' x
 
-twelve = Positive $ 1 :-: 2 :-: Point (:.)
-twoAndaHalf = Positive $ 2 :-: Point (5 :.: (:.))
-negativePointTwo = Negative $ Point (2 :.: (:.))
+instance Show R where
+    show (Positive x) = show x
+    show (Negative x) = "-" ++ show x
 
-unitTest = do 
-    print twelve
-    print twoAndaHalf
-    print negativePointTwo
+instance Show MajorReal where
+    show (x :-: y)      = show x ++ show y
+    show (Point (:.))   = ""
+    show (Point x)      = "." ++ show x
+
+instance Show MinorReal where
+    show (:.) = ""
+    show (x :.: y) = show x ++ show y
