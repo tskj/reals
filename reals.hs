@@ -1,10 +1,14 @@
-module Reals (R(Positive, Negative), MajorReal(Point, MajorReal), MinorReal(End, MinorReal)) where
+module Reals (R(Positive, Negative), MajorReal(Point, (:-:)), MinorReal((:.), (:.:))) where
 
 data Z = Base Integer Integer
 data R = Positive MajorReal | Negative MajorReal
 
-data MajorReal = Point MinorReal | MajorDigit Z MajorReal
-data MinorReal = End | MinorDigit Z MinorReal
+infixr 5 :-:
+infixr 5 :.:
+infixr 1 :.
+
+data MajorReal = Point MinorReal | (:-:) Z MajorReal
+data MinorReal = (:.) | (:.:) Z MinorReal
 
 instance Show Z where
     show (Base x y) | y >= x = "|" ++ show (Base x (div y x)) ++ show (Base x (mod y x)) ++ "|"
@@ -23,13 +27,13 @@ instance Show R where
     show (Negative x) = "-" ++ show x
 
 instance Show MajorReal where
-    show (MajorReal x y) = show x ++ show y
-    show (Point End) = ""
-    show (Point x) = "." ++ show x
+    show (x :-: y)      = show x ++ show y
+    show (Point (:.))   = ""
+    show (Point x)      = "." ++ show x
 
 instance Show MinorReal where
-    show End = ""
-    show (MinorReal x y) = show x ++ show y
+    show (:.) = ""
+    show (x :.: y) = show x ++ show y
 
 instance Num Z where
     Base b x + Base c y = Base d (x + y)
@@ -60,6 +64,6 @@ newton'sMethod f f' prc x
     | otherwise          = newton'sMethod f f' x2 prc
     where             x2 = x - f x / f' x
 
-twelve = Positive (MajorDigit 1 (MajorDigit 2 (Point End)))
-twoAndaHalf = Positive (MajorDigit 2 (Point (MinorDigit 5 End)))
-negativePointTwo = Negative (Point (MinorDigit 2 End))
+twelve = Positive $ 1 :-: 2 :-: Point (:.)
+twoAndaHalf = Positive $ 2 :-: Point (5 :.: (:.))
+negativePointTwo = Negative $ Point (2 :.: (:.))
