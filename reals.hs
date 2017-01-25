@@ -67,3 +67,8 @@ newton'sMethod f f' prc x
 twelve = Positive $ 1 :-: 2 :-: Point (:.)
 twoAndaHalf = Positive $ 2 :-: Point (5 :.: (:.))
 negativePointTwo = Negative $ Point (2 :.: (:.))
+
+unitTest = do 
+    print twelve
+    print twoAndaHalf
+    print negativePointTwo
