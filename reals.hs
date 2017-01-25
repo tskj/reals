@@ -13,22 +13,6 @@ infixr 1 :.
 data MajorReal = Point MinorReal | (:-:) Z MajorReal
 data MinorReal = (:.) | (:.:) Z MinorReal
 
-recNewton'sMethod f x n | n <= 0 = x
-recNewton'sMethod f x n = x2 - f x2 / f' x2
-    where x2 = recNewton'sMethod f x (n-1)
-          f' = \x -> (f (x + e) - f (x - e)) / (2 * e)
-          e = 0.001
-
-newton'sMethod' f f' x it | it <= 0 = x
-newton'sMethod' f f' x it           = newton'sMethod' f f' x2 (it-1)
-    where                       x2 = x - f x / f' x
-
-newton'sMethod :: (Ord t, Fractional t) => (t -> t) -> (t -> t) -> t -> t -> t
-newton'sMethod f f' prc x
-    | abs (x2 - x) < prc = x2
-    | otherwise          = newton'sMethod f f' x2 prc
-    where             x2 = x - f x / f' x
-
 instance Show R where
     show (Positive x) = show x
     show (Negative x) = "-" ++ show x
