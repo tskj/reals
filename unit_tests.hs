@@ -8,6 +8,8 @@ negativePointTwo = Negative $ Point (2 :.: (:.))
 zeroPointOneO = Positive $ 0 :-: Point (1 :.: 0 :.: (:.))
 oneHundreth = Positive $ 0 :-: Point (0 :.: 1 :.: (:.))
 pointTwo = Positive $ Point (2 :.: (:.))
+oneThird = Positive $ Point fracPart -- displaying of this is to be implemented
+    where fracPart = 3 :.: fracPart
 
 assert x Equals repr
     | show x == repr = putStr ""

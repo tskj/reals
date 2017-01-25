@@ -15,10 +15,12 @@ instance Show Z where
     show (Base x y) = show y
 
 instance Num Z where
+
     Base b x + Base c y = Base d (x + y)
         where d = max b c
     Base b x * Base c y = Base d (x * y)
         where d = max b c
+
     negate (Base b x) = Base b (negate x)
     abs (Base b x) = Base b (abs x)
     signum (Base b x) = Base b (signum x)
