@@ -15,8 +15,8 @@ data MinorReal = (:.) | (:.:) Z MinorReal
 
 instance Num R where
 
-    Positive x + Positive y = Positive $ x+y
-    Positive x + Negative y = Positive $ x-y
+    Positive x + Positive y = Positive $ x+y -- Most significant digit might be larger than base b.
+    Positive x + Negative y = Positive $ x-y -- Needs to be handled in every one of these.
     Negative x + Negative y = Negative $ x+y
     x + y = y + x
 
@@ -36,6 +36,16 @@ instance Num R where
 
     fromInteger n | n < 0  = negate . fromInteger . negate $ n
     fromInteger n = Positive $ fromInteger (div n 10 * 10) + fromInteger (mod n 10)
+
+instance Num MajorReal where
+
+    (n1 :-: Point fr1) + (n2 :-: Point fr2) = n1 + n2 + n3 :-: Point fr3
+        where fr3 = case fr1 + fr2 of
+                        (:.) -> (:.)
+                        Base b n :.: fr = Base b (mod n b) :.: fr
+              n3  = case fr1 + fr2 of
+                        (:.) -> 0
+                        Base b n :.: _ = Base b $ div n b
 
 instance Show R where
     show (Positive x) = show x
