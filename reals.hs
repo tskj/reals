@@ -3,15 +3,15 @@ module Reals    ( R(..)
                 , MinorReal(..)
                 ) where
 
-import Ints
+import Naturals
 
 data R = Positive MajorReal | Negative MajorReal
 
 infixr 5 :-:
 infixr 5 :.:
 infixr 1 :.
-data MajorReal = Point MinorReal | (:-:) Z MajorReal
-data MinorReal = (:.) | (:.:) Z MinorReal
+data MajorReal = Point MinorReal | (:-:) N MajorReal
+data MinorReal = (:.) | (:.:) N MinorReal
 
 instance Num R where
 
