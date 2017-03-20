@@ -1,6 +1,6 @@
-import Reals
+import TestHarness
 
-data AssertEqual = Equals
+import Reals
 
 twelve = Positive $ 1 :-: 2 :-: Point (:.)
 twoAndaHalf = Positive $ 2 :-: Point (5 :.: (:.))
@@ -10,10 +10,6 @@ oneHundreth = Positive $ 0 :-: Point (0 :.: 1 :.: (:.))
 pointTwo = Positive $ Point (2 :.: (:.))
 oneThird = Positive $ Point fracPart -- displaying of this is to be implemented
     where fracPart = 3 :.: fracPart
-
-assert x Equals repr
-    | show x == repr = putStr ""
-    | otherwise = error $ "\n\n" ++ "The following is wrong: " ++ show x ++ "\tIt should look like: " ++ repr ++ "\n\n"
 
 test_01 = do 
     print twelve

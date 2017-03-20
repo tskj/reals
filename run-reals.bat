@@ -1,1 +1,1 @@
-@runhaskell unit_tests.hs && ghci .\reals.hs
+@runhaskell -itests\ -isrc\ tests\reals_tests.hs && ghci src\reals.hs
