@@ -50,9 +50,11 @@ instance Show N where
 
     show n = show (div' n base) ++ show (mod' n base)
     
-        where   div' n m | n < m = Zero
-                div' n m | n == m = 1::N
-                div' n m = 1 + div' (n-m) m
+div' :: N -> N -> N
+div' 0 _ = Zero
+div' n m | n == m = 1
+div' n m = 1 + div' (n-m) m
 
-                mod' n m | n < m = n
-                mod' n m = mod' (n-m) m
+mod' :: N -> N -> N
+mod' n m | n < m = n
+mod' n m = mod' (n-m) m
